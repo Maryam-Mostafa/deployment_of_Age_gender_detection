@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
-import numpy as np
-from deepface import DeepFace
+from detection_model import predict_age_gender
 
 app = Flask(__name__)
 
@@ -17,31 +16,13 @@ def detect_age_gender():
         image_base64 = data['image']
 
         # Use age and gender detection model to predict age and gender
-        age, gender = predict_age_gender(image_base64)
+        result = predict_age_gender(image_base64)
 
         # Return the results as a JSON object
-        print(age, gender)
-        result = {"age": age, "gender": gender}
         return jsonify(result)
 
     except Exception as e:
         return jsonify({"error": str(e)})
-
-#spilt to two functions in script
-def predict_age_gender(image):
-    info = DeepFace.analyze(img_path=image, detector_backend='yunet',
-                            enforce_detection=False, actions=['age', 'gender'])
-    if info:
-        age = info[0]['age']
-        gender = info[0]['dominant_gender']
-
-    else:
-        # incase no faces
-        age = "no age detected"
-        gender = "no gender detected"
-
-    #return {"data":{"age":age, "gender":gender}, "state":"OK"}
-    return age, gender
 
 
 if __name__ == '__main__':
