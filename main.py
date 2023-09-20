@@ -27,7 +27,7 @@ def detect_age_gender():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-
+#spilt to two functions in script
 def predict_age_gender(image):
     info = DeepFace.analyze(img_path=image, detector_backend='yunet',
                             enforce_detection=False, actions=['age', 'gender'])
@@ -40,6 +40,7 @@ def predict_age_gender(image):
         age = "no age detected"
         gender = "no gender detected"
 
+    #return {"data":{"age":age, "gender":gender}, "state":"OK"}
     return age, gender
 
 
