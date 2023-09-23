@@ -1,0 +1,11 @@
+version:  "3.7"
+
+services:
+  mlapp:
+    container_name: age_gender_app
+    image: maryammostafa/age_gender_app_img
+    ports:
+      - "5000:5000"
+    build:
+      context: .
+      dockerfile: Dockerfile
